@@ -40,4 +40,4 @@ Hence, setting up the cron script to regularly purge posts and media after 1 day
 
 &lt;span class="c1"&gt;# Remove files not linked to any post&lt;/span&gt;
 &lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;media&lt;span class="w"&gt; &lt;/span&gt;remove-orphans&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Mastodon"></category></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Mastodon"></category><category term="Linux"></category><category term="Self-Hosted"></category></entry></feed>
