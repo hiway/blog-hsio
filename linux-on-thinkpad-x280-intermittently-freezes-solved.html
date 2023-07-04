@@ -38,17 +38,24 @@
 
  
 
-    <meta name="author" content="Harshad Sharma" />
-    <meta name="description" content="" />
+<meta name="author" content="Harshad Sharma" />
+<meta name="description" content="It appears that the random intermittent freezes every few minutes where the desktop/apps/pointer is unresponsive for a second or more is not limited to Fedora or Thinkpad. The reason is likely Intel i915 GPU. I found a discussion on Reddit that documents a solution in parts spread out …" />
+<meta name="keywords" content="">
+
+
   <meta property="og:site_name" content="Harshad's Blog"/>
-  <meta property="og:type" content="blog"/>
-  <meta property="og:title" content="Harshad's Blog"/>
-  <meta property="og:description" content=""/>
+  <meta property="og:title" content="Linux on Thinkpad x280 intermittently freezes [solved]"/>
+  <meta property="og:description" content="It appears that the random intermittent freezes every few minutes where the desktop/apps/pointer is unresponsive for a second or more is not limited to Fedora or Thinkpad. The reason is likely Intel i915 GPU. I found a discussion on Reddit that documents a solution in parts spread out …"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:url" content="https://blog.harshad.sharma.io"/>
+  <meta property="og:url" content="https://blog.harshad.sharma.io/linux-on-thinkpad-x280-intermittently-freezes-solved.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-07-04 00:00:00+05:30"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://blog.harshad.sharma.io/author/harshad-sharma.html">
+  <meta property="article:section" content="Linux"/>
   <meta property="og:image" content="/images/profile.png">
 
-  <title>Harshad's Blog &ndash; Posts by Harshad Sharma:</title>
+  <title>Harshad's Blog &ndash; Linux on Thinkpad x280 intermittently freezes [solved]</title>
 
 
 </head>
@@ -89,51 +96,59 @@
   <main>
 
 
-
-
-<article>
+<article class="single">
   <header>
-    <h2><a href="https://blog.harshad.sharma.io/linux-on-thinkpad-x280-intermittently-freezes-solved.html#linux-on-thinkpad-x280-intermittently-freezes-solved">Linux on Thinkpad x280 intermittently freezes [solved]</a></h2>
+      
+    <h1 id="linux-on-thinkpad-x280-intermittently-freezes-solved">Linux on Thinkpad x280 intermittently freezes [solved]</h1>
     <p>
       Posted on Tue 04 July 2023 in <a href="https://blog.harshad.sharma.io/category/linux.html">Linux</a>
 
-
     </p>
   </header>
+
+
   <div>
-      <div><p>It appears that the random intermittent freezes every few minutes 
+    <p>It appears that the random intermittent freezes every few minutes 
 where the desktop/apps/pointer is unresponsive for a second or more
 is not limited to Fedora or Thinkpad.</p>
 <p>The reason is likely Intel i915 GPU.</p>
 <p>I found a discussion on Reddit that documents a solution in parts
-spread out …</p></div>
-        <br>
-        <a class="btn"
-           href="https://blog.harshad.sharma.io/linux-on-thinkpad-x280-intermittently-freezes-solved.html#linux-on-thinkpad-x280-intermittently-freezes-solved">
-          Continue reading
-        </a>
+spread out over several comments for the complete answer:</p>
+<p>https://www.reddit.com/r/thinkpad/comments/rhbf8m/solution_thinkpad_short_freezes_on_gnulinux/</p>
+<p>Documenting the steps/files below for next time I'm in the same situation.</p>
+<p>Edit <code>/etc/default/grub</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gu">5a6</span>
+<span class="gi">&gt; GRUB_CMDLINE_LINUX_DEFAULT=&quot;i915.enable_psr=0 psmouse.synaptics_intertouch=1&quot;</span>
+<span class="gu">8c9</span>
+<span class="gd">&lt; GRUB_ENABLE_BLSCFG=true</span>
+<span class="gs">---</span>
+<span class="gi">&gt; GRUB_ENABLE_BLSCFG=false</span>
+</code></pre></div>
+
+<ul>
+<li><code>i915.enable_psr=0</code> to resolve the hangs</li>
+<li><code>psmouse.synaptics_intertouch=1</code> to improve touchpad functionality</li>
+<li><code>GRUB_ENABLE_BLSCFG=false</code> to ensure Fedora boots up</li>
+</ul>
+<p>Run the following commands to update grub config and reboot</p>
+<div class="highlight"><pre><span></span><code>sudo mv /boot/grub2/grub.cfg /root/boot-grub2-grub.cfg.bak
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo reboot
+</code></pre></div>
+
+<p>Have not encountered any freezes for over 24 hours now.</p>
   </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://blog.harshad.sharma.io/mastodon-on-diet.html#mastodon-on-diet">Mastodon On Diet</a></h2>
+  <div class="tag-cloud">
     <p>
-      Posted on Tue 04 July 2023 in <a href="https://blog.harshad.sharma.io/category/mastodon.html">Mastodon</a>
-
-
     </p>
-  </header>
-  <div>
-      <div><p>How to put your Mastodon instance on a diet and reduce the storage bloat.</p>
-<h1>TODO</h1></div>
   </div>
+
+
+
+
+
+
 </article>
-
-  <div class="pagination">
-  </div>
-
-
 
 <footer>
 <p>&copy;  </p>
