@@ -13,4 +13,30 @@ that solved my query&lt;/a&gt;.&lt;/p&gt;
 some 300,000+ photos and 800,000+ header images getting purged.
 That's a lot of storage and liability!&lt;/p&gt;
 &lt;p&gt;If I have not interacted with a post in a day, I'm likely not going to.
-Hence, setting up the cron script to regularly purge posts after 1 day.&lt;/p&gt;</content><category term="Mastodon"></category></entry></feed>
+Hence, setting up the cron script to regularly purge posts after 1 day.&lt;/p&gt;
+&lt;p&gt;Here's my crontab entry:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*/&lt;/span&gt;&lt;span class="mf"&gt;3&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mastodon&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;purge&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And here's &lt;code&gt;purge.sh&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Prune remote accounts that never interacted with a local user&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;accounts&lt;span class="w"&gt; &lt;/span&gt;prune&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Remove remote statuses that local users never interacted with older than 1 days&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;statuses&lt;span class="w"&gt; &lt;/span&gt;remove&lt;span class="w"&gt; &lt;/span&gt;--days&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Remove media attachments older than 4 days&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;media&lt;span class="w"&gt; &lt;/span&gt;remove&lt;span class="w"&gt; &lt;/span&gt;--days&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Remove all headers (including people I follow)&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;media&lt;span class="w"&gt; &lt;/span&gt;remove&lt;span class="w"&gt; &lt;/span&gt;--remove-headers&lt;span class="w"&gt; &lt;/span&gt;--include-follows&lt;span class="w"&gt; &lt;/span&gt;--days&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Remove link previews older than 16 days &lt;/span&gt;
+&lt;span class="c1"&gt;# Not 1 day as they aren&amp;#39;t fetched for ~14 days since posted-at date&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;preview_cards&lt;span class="w"&gt; &lt;/span&gt;remove&lt;span class="w"&gt; &lt;/span&gt;--days&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Remove files not linked to any post&lt;/span&gt;
+&lt;span class="nv"&gt;RAILS_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;production&lt;span class="w"&gt; &lt;/span&gt;/home/mastodon/live/bin/tootctl&lt;span class="w"&gt; &lt;/span&gt;media&lt;span class="w"&gt; &lt;/span&gt;remove-orphans&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Mastodon"></category></entry></feed>

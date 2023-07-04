@@ -120,6 +120,32 @@ some 300,000+ photos and 800,000+ header images getting purged.
 That's a lot of storage and liability!</p>
 <p>If I have not interacted with a post in a day, I'm likely not going to.
 Hence, setting up the cron script to regularly purge posts after 1 day.</p>
+<p>Here's my crontab entry:</p>
+<div class="highlight"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="o">*/</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mastodon</span><span class="o">/</span><span class="n">purge</span><span class="mf">.</span><span class="n">sh</span>
+</code></pre></div>
+
+<p>And here's <code>purge.sh</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Prune remote accounts that never interacted with a local user</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>accounts<span class="w"> </span>prune<span class="p">;</span>
+
+<span class="c1"># Remove remote statuses that local users never interacted with older than 1 days</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>statuses<span class="w"> </span>remove<span class="w"> </span>--days<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+
+<span class="c1"># Remove media attachments older than 4 days</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>media<span class="w"> </span>remove<span class="w"> </span>--days<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+
+<span class="c1"># Remove all headers (including people I follow)</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>media<span class="w"> </span>remove<span class="w"> </span>--remove-headers<span class="w"> </span>--include-follows<span class="w"> </span>--days<span class="w"> </span><span class="m">0</span><span class="p">;</span>
+
+<span class="c1"># Remove link previews older than 16 days </span>
+<span class="c1"># Not 1 day as they aren&#39;t fetched for ~14 days since posted-at date</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>preview_cards<span class="w"> </span>remove<span class="w"> </span>--days<span class="w"> </span><span class="m">16</span><span class="p">;</span>
+
+<span class="c1"># Remove files not linked to any post</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production<span class="w"> </span>/home/mastodon/live/bin/tootctl<span class="w"> </span>media<span class="w"> </span>remove-orphans<span class="p">;</span>
+</code></pre></div>
   </div>
   <div class="tag-cloud">
     <p>
