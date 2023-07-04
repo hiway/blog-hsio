@@ -12,6 +12,7 @@ that solved my query&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;While running each command seperately, I noticed 1 million+ statuses,
 some 300,000+ photos and 800,000+ header images getting purged.
 That's a lot of storage and liability!&lt;/p&gt;
+&lt;p&gt;After the purge, I now have a ~700MB database and ~26 GB in media.&lt;/p&gt;
 &lt;p&gt;If I have not interacted with a post in a day, I'm likely not going to.
 Hence, setting up the cron script to regularly purge posts and media after 1 day.&lt;/p&gt;
 &lt;p&gt;Here's my crontab entry:&lt;/p&gt;
