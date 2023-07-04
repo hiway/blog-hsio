@@ -12,11 +12,13 @@ I need to download over my 4G connection during the server move and [found a blo
 that solved my query](https://ricard.dev/improving-mastodons-disk-usage/).
 
 While running each command seperately, I noticed 1 million+ statuses,
-some 300,000+ photos and 800,000+ header images getting purged.
+some 300,000+ photos and 80,000+ header images getting purged.
 That's a lot of storage and liability!
 
+After the purge, I now have a ~700MB database and ~26 GB in media.
+
 If I have not interacted with a post in a day, I'm likely not going to.
-Hence, setting up the cron script to regularly purge posts after 1 day.
+Hence, setting up the cron script to regularly purge posts and media after 1 day.
 
 Here's my crontab entry:
 
