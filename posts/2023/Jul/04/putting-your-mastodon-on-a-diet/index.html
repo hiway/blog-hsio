@@ -122,7 +122,7 @@ that solved my query</a>.</p>
 some 300,000+ photos and 800,000+ header images getting purged.
 That's a lot of storage and liability!</p>
 <p>If I have not interacted with a post in a day, I'm likely not going to.
-Hence, setting up the cron script to regularly purge posts after 1 day.</p>
+Hence, setting up the cron script to regularly purge posts and media after 1 day.</p>
 <p>Here's my crontab entry:</p>
 <div class="highlight"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="o">*/</span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mastodon</span><span class="o">/</span><span class="n">purge</span><span class="mf">.</span><span class="n">sh</span>
 </code></pre></div>
