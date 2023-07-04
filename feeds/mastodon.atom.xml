@@ -10,7 +10,7 @@ Settings &amp;gt; Administration &amp;gt; Server Settings &amp;gt; Content reten
 I need to download over my 4G connection during the server move and &lt;a href="https://ricard.dev/improving-mastodons-disk-usage/"&gt;found a blog post
 that solved my query&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;While running each command seperately, I noticed 1 million+ statuses,
-some 300,000+ photos and 800,000+ header images getting purged.
+some 300,000+ photos and 80,000+ header images getting purged.
 That's a lot of storage and liability!&lt;/p&gt;
 &lt;p&gt;After the purge, I now have a ~700MB database and ~26 GB in media.&lt;/p&gt;
 &lt;p&gt;If I have not interacted with a post in a day, I'm likely not going to.
