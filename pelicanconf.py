@@ -4,6 +4,11 @@ SITEURL = ""
 SITELOGO = SITEURL + "/images/profile.png"
 FAVICON = SITEURL + "/images/favicon.png"
 
+ARTICLE_URL = "posts/{date:%Y}/{date:%b}/{date:%d}/{slug}/"
+ARTICLE_SAVE_AS = "posts/{date:%Y}/{date:%b}/{date:%d}/{slug}/index.html"
+PAGE_URL = "pages/{slug}/"
+PAGE_SAVE_AS = "pages/{slug}/index.html"
+
 PATH = "content"
 STATIC_PATHS = ["images"]
 THEME = "themes/Flex"
@@ -25,15 +30,15 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (
-    ("About", "https://harshad.sharma.io/"),
+    # ("About", "https://harshad.sharma.io/"),
+    # ("Software", "https://github.com/hiway/"),
     ("Fediverse", "https://mastodon.sharma.io/@harshad/"),
-    ("Software", "https://github.com/hiway/"),
+    ("Atom Feed", "https://blog.harshad.sharma.io/feeds/all.atom.xml"),
 )
 
 # Social widget
 # SOCIAL = (
-#     ("You can add links in your config file", "#"),
-#     ("Another social link", "#"),
+#     ("Fediverse", "https://mastodon.sharma.io/@harshad/"),
 # )
 
 DEFAULT_PAGINATION = 20
