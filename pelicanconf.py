@@ -1,8 +1,16 @@
 AUTHOR = "Harshad Sharma"
 SITENAME = "Harshad's Blog"
 SITEURL = ""
+SITELOGO = SITEURL + "/images/profile.png"
+FAVICON = SITEURL + "/images/favicon.png"
 
 PATH = "content"
+STATIC_PATHS = ["images"]
+THEME = "themes/Flex"
+PLUGINS = [
+    "minchin.pelican.plugins.cname",
+    "minchin.pelican.plugins.nojekyll",
+]
 
 TIMEZONE = "Asia/Kolkata"
 
@@ -17,7 +25,8 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (
-    ("Social", "https://mastodon.sharma.io/@harshad/"),
+    ("About", "https://harshad.sharma.io/"),
+    ("Fediverse", "https://mastodon.sharma.io/@harshad/"),
     ("Software", "https://github.com/hiway/"),
 )
 
